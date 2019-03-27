@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { Route } from "react-router-dom";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import { Header, Entry, Secondary } from "./containers";
+import {Header, Entry, Secondary, Login} from "./containers";
 import "./App.css";
+import "typeface-roboto";
 
 class App extends Component {
   constructor(props) {
@@ -52,6 +53,7 @@ class App extends Component {
         <div className="Body">
           <Route path="/" exact component={Entry} />
           <Route path="/secondary/" component={Secondary} />
+          <Route path="/login/" component={Login} />
         </div>
       </div>
     );

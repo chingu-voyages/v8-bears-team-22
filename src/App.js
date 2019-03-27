@@ -4,6 +4,7 @@ import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import {Header, Entry, Secondary, Login} from "./containers";
 import "./App.css";
+import "typeface-roboto";
 
 class App extends Component {
   constructor(props) {

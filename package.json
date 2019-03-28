@@ -20,7 +20,9 @@
     "react-router-dom": "^4.4.0",
     "react-scripts": "2.1.8",
     "request-promise": "^4.2.4",
-    "typeface-roboto": "^0.0.54"
+    "typeface-roboto": "^0.0.54",
+    "prop-types": "latest",
+    "graphql-tag": "latest"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component} from "react";
 import {Button, FormControl, Input, InputLabel, Paper} from "@material-ui/core";
 import '../css/login.css';
 import AccountService from "../services/AccountService";
@@ -51,7 +51,7 @@ export default class Login extends Component {
   render() {
     return (
       <div className="login">
-        <div> valid email/password : test@email.com/password </div>
+        <div> valid email/password : test@email.com/password</div>
         <Paper className="paper">
           <Dialog
             open={this.state.open}

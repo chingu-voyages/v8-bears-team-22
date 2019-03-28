@@ -3,4 +3,4 @@ import Entry from "./entry";
 import Secondary from "./secondary";
 import Login from "./login";
 
-export { Header, Entry, Secondary, Login };
+export {Header, Entry, Secondary, Login};

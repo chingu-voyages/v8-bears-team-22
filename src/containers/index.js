@@ -1,6 +1,5 @@
-import Header from "./header";
-import Entry from "./entry";
-import Secondary from "./secondary";
-import Login from "./login";
+import Header from "./Header";
+import Entry from "./Entry";
+import Secondary from "./Secondary";
 
-export {Header, Entry, Secondary, Login};
+export {Header, Entry, Secondary};

@@ -3,6 +3,7 @@ import { Route } from "react-router-dom";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import {Header, Entry, Secondary, Login} from "./containers";
+import AccountScreen from './components/AccountScreen';
 import "./App.css";
 import "typeface-roboto";
 
@@ -54,6 +55,7 @@ class App extends Component {
           <Route path="/" exact component={Entry} />
           <Route path="/secondary/" component={Secondary} />
           <Route path="/login/" component={Login} />
+          <Route path="/account/" component={AccountScreen} />
         </div>
       </div>
     );

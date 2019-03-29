@@ -6,7 +6,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import MenuIcon from '@material-ui/icons/Menu';
-import Sidebar from "./sidebar";
+import Sidebar from "../components/Sidebar";
 
 export default class Header extends Component {
   constructor(props) {
@@ -43,8 +43,6 @@ export default class Header extends Component {
 
         <Sidebar open={this.state.open} handleDrawerClose={this.handleDrawerClose}/>
       </div>
-
     );
   }
-
 };

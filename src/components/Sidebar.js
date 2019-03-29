@@ -10,7 +10,7 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import InfoIcon from "@material-ui/icons/Info";
 import SchoolIcon from "@material-ui/icons/School";
 import AccountIcon from "@material-ui/icons/AccountCircle";
-import CircularProgressBar from "../components/CircularProgressBar";
+import CircularProgressBar from "./CircularProgressBar";
 import {Typography} from "@material-ui/core";
 import {Link} from "react-router-dom";
 
@@ -41,21 +41,24 @@ const Sidebar = (props) => {
           </ListItemIcon>
           <ListItemText primary="Overview"/>
         </ListItem>
+        <Divider/>
         <ListItem button key="Curriculum">
           <ListItemIcon>
             <SchoolIcon/>
           </ListItemIcon>
           <ListItemText primary="Curriculum"/>
         </ListItem>
+        <Divider/>
         <ListItem button key="Account" component={Link} to="/account">
           <ListItemIcon>
             <AccountIcon/>
           </ListItemIcon>
           <ListItemText primary="Account"/>
         </ListItem>
+        <Divider/>
       </List>
     </Drawer>
   );
-}
+};
 
 export default Sidebar;

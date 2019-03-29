@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {Button, FormControl, Input, InputLabel, Paper} from "@material-ui/core";
-import '../css/login.css';
+import './Login.css';
 import AccountService from "../services/AccountService";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";

@@ -2,12 +2,13 @@ import React, {Component} from "react";
 import {Route} from "react-router-dom";
 import {Query} from "react-apollo";
 import gql from "graphql-tag";
-import {Header, Entry, Secondary, Login} from "./containers";
+import {Header, Entry, Secondary} from "./containers";
 import "./App.css";
 import "typeface-roboto";
 import {CssBaseline} from "@material-ui/core";
 import * as PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
+import Login from "./components/Login";
 
 
 class App extends Component {

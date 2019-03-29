@@ -12,6 +12,7 @@ import SchoolIcon from "@material-ui/icons/School";
 import AccountIcon from "@material-ui/icons/AccountCircle";
 import CircularProgressBar from "../components/CircularProgressBar";
 import {Typography} from "@material-ui/core";
+import {Link} from "react-router-dom";
 
 
 const Sidebar = (props) => {
@@ -46,7 +47,7 @@ const Sidebar = (props) => {
           </ListItemIcon>
           <ListItemText primary="Curriculum"/>
         </ListItem>
-        <ListItem button key="Account">
+        <ListItem button key="Account" component={Link} to="/account">
           <ListItemIcon>
             <AccountIcon/>
           </ListItemIcon>

@@ -1,4 +1,4 @@
-.account-paper, .account-form {
+.account-paper {
   min-width: 30vw;
   display: flex;
   flex-direction: column;
@@ -6,6 +6,14 @@
   padding: 20px;
 }
 
+.account-form {
+  width: 80%;
+}
+
 .account-form .text-field {
   width: 100%;
+}
+
+.button {
+  margin: 20px;
 }

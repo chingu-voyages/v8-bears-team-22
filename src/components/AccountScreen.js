@@ -4,28 +4,17 @@ import { withStyles } from '@material-ui/core/styles';
 import {Button, Dialog, DialogActions, DialogContent, DialogContentText, Paper, TextField} from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CachedIcon from '@material-ui/icons/Cached';
-import '../css/account.css';
-
-// TODO:* Refactor:
-//        * Reusable Dialog Component
-//        * Reusable Form Validators
-//        * Reusable form that accepts field names
-//
-//      * DB User table connection functionality
-//        * Update name, email, password
-//        * Check old password against the DB
-//        * Reset progress
-//        * Delete account
+import './AccountScreen.css';
 
 
 const PASSWORD = "password"; // hardcoded password for testing the form
 
 
-const styles = theme => ({
+const styles = {
   button: {
     margin: 5
   }
-})
+}
 
 class AccountScreen extends Component {
   constructor(props) {

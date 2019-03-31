@@ -1,27 +1,27 @@
-import React, {Component} from "react";
-import {Link} from "react-router-dom";
-import {AppBar} from "@material-ui/core";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { AppBar } from '@material-ui/core';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import MenuIcon from '@material-ui/icons/Menu';
-import Sidebar from "../components/Sidebar";
+import Sidebar from '../components/Sidebar';
 
 export default class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false
+      open: false,
     };
   }
 
   handleDrawerClose = () => {
-    this.setState({open: false});
+    this.setState({ open: false });
   };
 
   handleDrawerOpen = () => {
-    this.setState({open: true});
+    this.setState({ open: true });
   };
 
   render() {
@@ -30,7 +30,7 @@ export default class Header extends Component {
         <AppBar position="static" color="default">
           <Toolbar>
             <IconButton color="default" aria-label="Menu" onClick={this.handleDrawerOpen}>
-              <MenuIcon/>
+              <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit">
               Interview Preppers
@@ -41,8 +41,8 @@ export default class Header extends Component {
           </Toolbar>
         </AppBar>
 
-        <Sidebar open={this.state.open} handleDrawerClose={this.handleDrawerClose}/>
+        <Sidebar open={this.state.open} handleDrawerClose={this.handleDrawerClose} />
       </div>
     );
   }
-};
+}

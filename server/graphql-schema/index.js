@@ -1,4 +1,4 @@
-import { gql } from "apollo-server-express";
+import { gql } from 'apollo-server-express';
 
 const typeDefs = gql`
   type Query {
@@ -12,22 +12,18 @@ const typeDefs = gql`
 `;
 const resolvers = {
   Query: {
-    hello: (_, { name }) => `Hello ${name || "World"}`,
-    messages: async (parent, args, context) => {
-      return (await context.db.messages.find({}).toArray()).map(
-        item => item.text
-      );
-    }
+    hello: (_, { name }) => `Hello ${name || 'World'}`,
+    messages: async (parent, args, context) => (await context.db.messages.find({}).toArray()).map(
+      item => item.text,
+    ),
   },
 
   Mutation: {
-    message: async (parent, { text }, context) => {
-      return await context.db.messages.insert({ text }).then((doc, err) => {
-        if (err) return "Failure";
-        return "Success";
-      });
-    }
-  }
+    message: async (parent, { text }, context) => await context.db.messages.insert({ text }).then((doc, err) => {
+      if (err) return 'Failure';
+      return 'Success';
+    }),
+  },
 };
 
 export { typeDefs, resolvers };

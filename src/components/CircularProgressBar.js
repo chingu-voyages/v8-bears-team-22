@@ -1,5 +1,5 @@
-import React, {Component} from "react";
-import "./CircularProgressBar.css";
+import React, { Component } from 'react';
+import './CircularProgressBar.css';
 
 export default class CircularProgressBar extends Component {
   constructor(props) {
@@ -23,13 +23,15 @@ export default class CircularProgressBar extends Component {
       <svg
         width={this.props.sqSize}
         height={this.props.sqSize}
-        viewBox={viewBox}>
+        viewBox={viewBox}
+      >
         <circle
           className="circle-background"
           cx={this.props.sqSize / 2}
           cy={this.props.sqSize / 2}
           r={radius}
-          strokeWidth={`${this.props.strokeWidth}px`}/>
+          strokeWidth={`${this.props.strokeWidth}px`}
+        />
         <circle
           className="circle-progress"
           cx={this.props.sqSize / 2}
@@ -40,18 +42,20 @@ export default class CircularProgressBar extends Component {
           transform={`rotate(-90 ${this.props.sqSize / 2} ${this.props.sqSize / 2})`}
           style={{
             strokeDasharray: dashArray,
-            strokeDashoffset: dashOffset
-          }}/>
+            strokeDashoffset: dashOffset,
+          }}
+        />
         <text
           className="circle-text"
           x="50%"
           y="50%"
           dy=".3em"
-          textAnchor="middle">
+          textAnchor="middle"
+        >
           {`${this.props.percentage}%`}
         </text>
       </svg>
-    )
+    );
   }
 }
 
@@ -59,5 +63,5 @@ export default class CircularProgressBar extends Component {
 CircularProgressBar.defaultProps = {
   sqSize: 200,
   percentage: 26,
-  strokeWidth: 10
+  strokeWidth: 10,
 };

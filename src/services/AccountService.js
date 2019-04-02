@@ -11,9 +11,12 @@ class AccountService {
       json: true,
     };
 
-    return request.post(options).then(body => body).catch((err) => {
-      console.log(err);
-    });
+    return request
+      .post(options)
+      .then(body => body)
+      .catch((err) => {
+        console.log(err); // eslint-disable-line no-console
+      });
   }
 }
 

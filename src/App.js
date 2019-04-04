@@ -5,12 +5,10 @@ import gql from 'graphql-tag';
 import './App.css';
 import 'typeface-roboto';
 import { CssBaseline } from '@material-ui/core';
-import * as PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import AccountScreen from './components/AccountScreen';
 import { Header, Entry, Secondary } from './containers';
 import Login from './components/Login';
-
 
 class App extends Component {
   constructor(props) {
@@ -31,7 +29,7 @@ class App extends Component {
           this.setState({ connected: true });
         }
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err)); // eslint-disable-line no-console
   }
 
   render() {
@@ -58,6 +56,7 @@ class App extends Component {
             if (data.hello === 'Hello World') {
               return 'Graphql Server Connected';
             }
+            return null;
           }}
         </Query>
         <div className="Body">
@@ -76,10 +75,6 @@ const styles = {
     width: '100%',
     maxWidth: 500,
   },
-};
-
-App.propTypes = {
-  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(App);

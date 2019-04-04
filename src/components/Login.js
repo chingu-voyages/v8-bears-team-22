@@ -19,10 +19,6 @@ export default class Login extends Component {
     };
   }
 
-  validateForm() {
-    return this.state.email.length > 0 && this.state.password.length > 0;
-  }
-
   onFormSubmit = (event) => {
     event.preventDefault();
   };
@@ -34,28 +30,34 @@ export default class Login extends Component {
   };
 
   onLoginClick = () => {
+    const { email, password } = this.state;
     const payload = {
-      email: this.state.email,
-      password: this.state.password,
+      email,
+      password,
     };
 
-    AccountService.login(payload)
-      .then((response) => {
-        this.setState({ isLoggedIn: response.result, open: true });
-      });
+    AccountService.login(payload).then((response) => {
+      this.setState({ isLoggedIn: response.result, open: true });
+    });
   };
 
   handleClose = () => {
     this.setState({ open: false });
   };
 
+  validateForm() {
+    const { email, password } = this.state;
+    return email.length > 0 && password.length > 0;
+  }
+
   render() {
+    const { open, isLoggedIn } = this.state;
     return (
       <div className="login">
         <div> valid email/password : test@email.com/password</div>
         <Paper className="paper">
           <Dialog
-            open={this.state.open}
+            open={open}
             onClose={this.handleClose}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
@@ -64,31 +66,18 @@ export default class Login extends Component {
               <DialogContentText id="alert-dialog-description">
                 Login
                 {' '}
-                {this.state.isLoggedIn ? 'Successful' : 'Unsuccessful'}
+                {isLoggedIn ? 'Successful' : 'Unsuccessful'}
               </DialogContentText>
             </DialogContent>
           </Dialog>
-          <form
-            onSubmit={this.onFormSubmit}
-            className="login-form"
-          >
+          <form onSubmit={this.onFormSubmit} className="login-form">
             <FormControl fullWidth>
               <InputLabel>Email</InputLabel>
-              <Input
-                id="email"
-                name="email"
-                type="email"
-                onChange={this.onInputChange}
-              />
+              <Input id="email" name="email" type="email" onChange={this.onInputChange} />
             </FormControl>
             <FormControl fullWidth>
               <InputLabel>Password</InputLabel>
-              <Input
-                id="password"
-                name="password"
-                type="password"
-                onChange={this.onInputChange}
-              />
+              <Input id="password" name="password" type="password" onChange={this.onInputChange} />
             </FormControl>
             <Button
               type="submit"
@@ -97,7 +86,7 @@ export default class Login extends Component {
               onClick={this.onLoginClick}
               color="primary"
             >
-Login
+              Login
             </Button>
           </form>
         </Paper>

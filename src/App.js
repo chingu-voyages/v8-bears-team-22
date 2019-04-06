@@ -120,7 +120,6 @@ class App extends Component {
   updateDetailsFunction = (name, newEmail, password) => {
     const { signedIn, email } = this.state;
     const { client } = this.props;
-    console.log('up');
     if (signedIn) {
       return client.mutate({
         mutation: gql`
@@ -130,7 +129,6 @@ class App extends Component {
         `,
       }).then((response) => {
         if (response.data.updateDetails > 0) {
-          console.log('Her');
           this.setState({ name, email });
           //   history.push('/account');
           return 'Details Updated';

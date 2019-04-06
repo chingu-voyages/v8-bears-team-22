@@ -65,7 +65,6 @@ class AccountScreen extends Component {
     // ...
     const { name, email, newPassword } = this.state;
     const returnMessage = await updateDetailsFunction(name, email, newPassword);
-    console.log(returnMessage);
     this.setState({ dialogMessage: returnMessage, open: true });
   }
 

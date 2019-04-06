@@ -1,18 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 import './index.css';
 import App from './App';
+import history from './history';
 import * as serviceWorker from './serviceWorker';
 
 const client = new ApolloClient();
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <Router>
-      <App />
+    <Router history={history}>
+      <App client={client} />
     </Router>
   </ApolloProvider>,
   document.getElementById('root'),

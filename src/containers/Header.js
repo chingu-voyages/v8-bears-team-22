@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { AppBar } from '@material-ui/core';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -12,24 +13,18 @@ export default class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false,
+    //   open: false,
     };
   }
 
-  handleDrawerClose = () => {
-    this.setState({ open: false });
-  };
-
-  handleDrawerOpen = () => {
-    this.setState({ open: true });
-  };
 
   render() {
+    const { handleDrawerOpen } = this.props;
     return (
       <div>
         <AppBar position="static" color="default">
           <Toolbar>
-            <IconButton color="default" aria-label="Menu" onClick={this.handleDrawerOpen}>
+            <IconButton color="default" aria-label="Menu" onClick={handleDrawerOpen}>
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit">
@@ -41,8 +36,14 @@ export default class Header extends Component {
           </Toolbar>
         </AppBar>
 
-        <Sidebar open={this.state.open} handleDrawerClose={this.handleDrawerClose} />
+        <Sidebar
+          {...this.props}
+        />
       </div>
     );
   }
 }
+
+Header.propTypes = {
+  handleDrawerOpen: PropTypes.func.isRequired,
+};

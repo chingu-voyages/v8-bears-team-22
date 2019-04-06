@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
   Button, FormControl, Input, InputLabel, Paper,
 } from '@material-ui/core';
@@ -15,12 +16,10 @@ export default class Login extends Component {
       email: '',
       password: '',
       isLoggedIn: false,
+      invalidEmail: false,
+      invalidPassword: false,
       open: false,
     };
-  }
-
-  validateForm() {
-    return this.state.email.length > 0 && this.state.password.length > 0;
   }
 
   onFormSubmit = (event) => {
@@ -34,14 +33,43 @@ export default class Login extends Component {
   };
 
   onLoginClick = () => {
+    const { email, password } = this.state;
+    const { logInFunction } = this.props;
+
     const payload = {
-      email: this.state.email,
-      password: this.state.password,
+      email,
+      password,
     };
 
     AccountService.login(payload)
       .then((response) => {
-        this.setState({ isLoggedIn: response.result, open: true });
+        if (!response.result.validEmail) {
+          this.setState({
+            invalidEmail: true,
+            invalidPassword: false,
+            isLoggedIn: false,
+            open: true,
+          });
+        } else if (!response.result.validPassword) {
+          this.setState({
+            invalidEmail: false,
+            invalidPassword: true,
+            isLoggedIn: false,
+            open: true,
+          });
+        } else {
+          logInFunction(
+            response.result.email,
+            response.result.name,
+            response.result.progress,
+          );
+          this.setState({
+            invalidEmail: false,
+            invalidPassword: false,
+            isLoggedIn: true,
+            open: true,
+          });
+        }
       });
   };
 
@@ -49,22 +77,30 @@ export default class Login extends Component {
     this.setState({ open: false });
   };
 
+  validateForm() {
+    const { email, password } = this.state;
+    return email.length > 0 && password.length > 0;
+  }
+
   render() {
+    const {
+      open, isLoggedIn, invalidEmail, invalidPassword,
+    } = this.state;
     return (
       <div className="login">
         <div> valid email/password : test@email.com/password</div>
         <Paper className="paper">
           <Dialog
-            open={this.state.open}
+            open={open}
             onClose={this.handleClose}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
           >
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-                Login
-                {' '}
-                {this.state.isLoggedIn ? 'Successful' : 'Unsuccessful'}
+                {isLoggedIn ? 'Login Successful' : ''}
+                {invalidEmail ? 'Invalid Email' : ''}
+                {invalidPassword ? 'Incorrect Password' : ''}
               </DialogContentText>
             </DialogContent>
           </Dialog>
@@ -105,3 +141,7 @@ Login
     );
   }
 }
+
+Login.propTypes = {
+  logInFunction: PropTypes.func.isRequired,
+};

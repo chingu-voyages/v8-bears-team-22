@@ -28,10 +28,12 @@ const Sidebar = props => (
     </div>
     <Divider />
     <Typography variant="h4" gutterBottom>
-        John Doe
+      {props.name}
     </Typography>
     <div>
-      <CircularProgressBar />
+      <CircularProgressBar
+        percentage={props.progress}
+      />
     </div>
     <Divider />
     <List>
@@ -59,5 +61,11 @@ const Sidebar = props => (
     </List>
   </Drawer>
 );
+
+Sidebar.defaultProps = {
+  name: 'Sidebar',
+  open: false,
+  progress: 0,
+};
 
 export default Sidebar;

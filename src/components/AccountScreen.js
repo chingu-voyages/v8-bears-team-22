@@ -22,10 +22,10 @@ class AccountScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: 'John Doe',
-      email: 'johndoe@gmail.com',
-      oldPassword: '',
+      name: props.name,
+      email: props.email,
       newPassword: '',
+      dialogMessage: '',
       open: false,
     };
   }
@@ -35,18 +35,38 @@ class AccountScreen extends Component {
   }
 
   get dialogMessage() {
-    const { newPassword, oldPassword } = this.state;
-    if (newPassword.length > 0) {
-      return oldPassword.length > 0 && this.isPasswordMatch ? 'Password updated successfully!' : "Old password doesn't match!";
-    }
-    return `Updated successfully! Name: ${this.state.name}. Email: ${this.state.email}`;
+    const { dialogMessage } = this.state;
+    // const { newPassword, oldPassword } = this.state;
+    // if (newPassword.length > 0) {
+    //   return oldPassword.length > 0 && this.isPasswordMatch ? 'Password updated successfully!' : "Old password doesn't match!";
+    // }
+    // return `Updated successfully! Name: ${this.state.name}. Email: ${this.state.email}`;
+    return dialogMessage;
   }
 
-  submitForm = (event) => {
+  deleteAccountFunction = async () => {
+    const { email } = this.state;
+    const { deleteAccountFunction } = this.props;
+    const returnMessage = await deleteAccountFunction(email);
+    this.setState({ dialogMessage: returnMessage, open: true });
+  }
+
+  resetProgressFunction = async () => {
+    const { email } = this.state;
+    const { resetProgressFunction } = this.props;
+    const returnMessage = await resetProgressFunction(email);
+    this.setState({ dialogMessage: returnMessage, open: true });
+  }
+
+  submitForm = async (event) => {
+    const { updateDetailsFunction } = this.props;
     event.preventDefault();
     // update info in user table
     // ...
-    this.setState({ open: true });
+    const { name, email, newPassword } = this.state;
+    const returnMessage = await updateDetailsFunction(name, email, newPassword);
+    console.log(returnMessage);
+    this.setState({ dialogMessage: returnMessage, open: true });
   }
 
   handleClose = () => {
@@ -58,12 +78,15 @@ class AccountScreen extends Component {
   };
 
   render() {
+    const {
+      email, name, newPassword, open,
+    } = this.state;
     const { classes } = this.props;
 
     return (
       <div className="account">
         <Dialog
-          open={this.state.open}
+          open={open}
           onClose={this.handleClose}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
@@ -89,7 +112,7 @@ class AccountScreen extends Component {
               id="standard-name"
               label="Name"
               className="text-field"
-              value={this.state.name}
+              value={name}
               required
               onChange={this.handleChange('name')}
               margin="normal"
@@ -99,12 +122,12 @@ class AccountScreen extends Component {
               label="Email"
               type="email"
               className="text-field"
-              value={this.state.email}
+              value={email}
               required
               onChange={this.handleChange('email')}
               margin="normal"
             />
-            <TextField
+            {/* <TextField
               id="standard-email-input"
               label="Old password"
               className="text-field"
@@ -112,13 +135,13 @@ class AccountScreen extends Component {
               value={this.state.oldPassword}
               onChange={this.handleChange('oldPassword')}
               margin="normal"
-            />
+            /> */}
             <TextField
               id="standard-password-input"
               label="New password"
               className="text-field"
               type="password"
-              value={this.state.newPassword}
+              value={newPassword}
               onChange={this.handleChange('newPassword')}
               margin="normal"
             />
@@ -135,6 +158,7 @@ class AccountScreen extends Component {
         <h2 className="account-form-label">Account Settings</h2>
         <Paper className="account-paper">
           <Button
+            onClick={this.resetProgressFunction}
             type="standard-password-input"
             variant="contained"
             color="secondary"
@@ -144,6 +168,7 @@ class AccountScreen extends Component {
             Reset Progress
           </Button>
           <Button
+            onClick={this.deleteAccountFunction}
             type="standard-password-input"
             variant="contained"
             color="secondary"
@@ -160,6 +185,16 @@ class AccountScreen extends Component {
 
 AccountScreen.propTypes = {
   classes: PropTypes.object.isRequired,
+  name: PropTypes.string,
+  email: PropTypes.string,
+  updateDetailsFunction: PropTypes.func.isRequired,
+  deleteAccountFunction: PropTypes.func.isRequired,
+  resetProgressFunction: PropTypes.func.isRequired,
+};
+
+AccountScreen.defaultProps = {
+  name: 'John Doe',
+  email: 'johndoe@gmail.com',
 };
 
 

@@ -23,6 +23,33 @@ const expressApp = (db) => {
 
   server.applyMiddleware({ app });
 
+  async function isValidCredentials(payloadCreds) {
+    // TODO fetch credentials from DB
+    const { email, password } = payloadCreds;
+    const data = await db.users.findOne({ email });
+    if (data) {
+      if (password === data.password) {
+        return {
+          validEmail: true,
+          validPassword: true,
+          email: data.email,
+          name: data.name,
+          progress: data.progress,
+        };
+      }
+      return {
+        validEmail: true,
+        validPassword: false,
+      };
+    }
+    return { validEmail: false };
+
+    // console.log(data);
+    // const validCredentials = { email: 'test@email.com', password: 'password' };
+    // return payloadCreds.email === validCredentials.email
+    //   && payloadCreds.password === validCredentials.password;
+  }
+
   app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../build/index.html'));
   });
@@ -31,23 +58,16 @@ const expressApp = (db) => {
     res.json({ message: 'Hello' });
   });
 
-  router.post('/account/login', (req, res) => {
+  router.post('/account/login', async (req, res) => {
     res.json({
-      result: isValidCredentials(req.body),
+      result: await isValidCredentials(req.body),
     });
   });
-
-  function isValidCredentials(payloadCreds) {
-    // TODO fetch credentials from DB
-    const validCredentials = { email: 'test@email.com', password: 'password' };
-    return payloadCreds.email === validCredentials.email
-      && payloadCreds.password === validCredentials.password;
-  }
 
   router.get('/db', (req, res) => {
     db.messages.find({}).toArray((err, docs) => {
       if (err) return err;
-      console.log(docs);
+      return docs;
     });
     res.redirect('/api');
   });

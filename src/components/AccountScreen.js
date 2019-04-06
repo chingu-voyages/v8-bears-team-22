@@ -1,36 +1,46 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import {Button, Dialog, DialogActions, DialogContent, DialogContentText, Paper, TextField} from '@material-ui/core';
+import {
+  Button, Dialog, DialogActions, DialogContent, DialogContentText, Paper, TextField,
+} from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CachedIcon from '@material-ui/icons/Cached';
 import './AccountScreen.css';
 
 
-const PASSWORD = "password"; // hardcoded password for testing the form
+const PASSWORD = 'password'; // hardcoded password for testing the form
 
 
 const styles = {
   button: {
-    margin: 5
-  }
-}
+    margin: 5,
+  },
+};
 
 class AccountScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "John Doe",
-      email: "johndoe@gmail.com",
-      oldPassword: "",
-      newPassword: "",
-      open: false
-    }
+      name: 'John Doe',
+      email: 'johndoe@gmail.com',
+      oldPassword: '',
+      newPassword: '',
+      open: false,
+    };
   }
 
-  handleChange = name => event => {
-    this.setState({ [name]: event.target.value });
-  };
+  get isPasswordMatch() {
+    return PASSWORD === this.state.oldPassword;
+  }
+
+  get dialogMessage() {
+    const { newPassword, oldPassword } = this.state;
+    if (newPassword.length > 0) {
+      return oldPassword.length > 0 && this.isPasswordMatch ? 'Password updated successfully!' : "Old password doesn't match!";
+    }
+    return `Updated successfully! Name: ${this.state.name}. Email: ${this.state.email}`;
+  }
 
   submitForm = (event) => {
     event.preventDefault();
@@ -43,21 +53,12 @@ class AccountScreen extends Component {
     this.setState({ open: false });
   };
 
-  get isPasswordMatch() {
-    return PASSWORD === this.state.oldPassword;
-  }
-
-  get dialogMessage() {
-    const {newPassword, oldPassword} = this.state;
-    if (newPassword.length > 0) {
-      return oldPassword.length > 0 && this.isPasswordMatch ? "Password updated successfully!" : "Old password doesn't match!"
-    }
-    return `Updated successfully! Name: ${this.state.name}. Email: ${this.state.email}`;
-  }
-  
+  handleChange = name => (event) => {
+    this.setState({ [name]: event.target.value });
+  };
 
   render() {
-    const {classes} = this.props;
+    const { classes } = this.props;
 
     return (
       <div className="account">
@@ -80,7 +81,7 @@ class AccountScreen extends Component {
         </Dialog>
         <h2 className="account-form-label">Update Personal Information</h2>
         <Paper className="account-paper">
-          <form 
+          <form
             className="account-form"
             onSubmit={this.submitForm}
           >
@@ -121,9 +122,9 @@ class AccountScreen extends Component {
               onChange={this.handleChange('newPassword')}
               margin="normal"
             />
-            <Button 
+            <Button
               type="submit"
-              variant="contained" 
+              variant="contained"
               color="primary"
             >
               Update
@@ -133,32 +134,32 @@ class AccountScreen extends Component {
 
         <h2 className="account-form-label">Account Settings</h2>
         <Paper className="account-paper">
-          <Button 
+          <Button
             type="standard-password-input"
-            variant="contained" 
+            variant="contained"
             color="secondary"
-            className={classes.button} 
+            className={classes.button}
           >
             <CachedIcon />
-            Reset Progress 
+            Reset Progress
           </Button>
-          <Button 
+          <Button
             type="standard-password-input"
-            variant="contained" 
+            variant="contained"
             color="secondary"
-            className={classes.button} 
+            className={classes.button}
           >
             <DeleteIcon />
-            Delete Account 
+            Delete Account
           </Button>
         </Paper>
       </div>
-    )
+    );
   }
 }
 
 AccountScreen.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
 

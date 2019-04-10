@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
@@ -14,21 +15,16 @@ import { Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import CircularProgressBar from './CircularProgressBar';
 
-
-const Sidebar = props => (
-  <Drawer
-    variant="persistent"
-    anchor="left"
-    open={props.open}
-  >
+const Sidebar = ({ open, handleDrawerClose }) => (
+  <Drawer variant="persistent" anchor="left" open={open}>
     <div>
-      <IconButton onClick={props.handleDrawerClose}>
+      <IconButton onClick={handleDrawerClose}>
         <ChevronLeftIcon />
       </IconButton>
     </div>
     <Divider />
     <Typography variant="h4" gutterBottom>
-        John Doe
+      John Doe
     </Typography>
     <div>
       <CircularProgressBar />
@@ -59,5 +55,10 @@ const Sidebar = props => (
     </List>
   </Drawer>
 );
+
+Sidebar.propTypes = {
+  open: PropTypes.bool.isRequired,
+  handleDrawerClose: PropTypes.func.isRequired,
+};
 
 export default Sidebar;

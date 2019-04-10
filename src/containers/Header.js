@@ -25,6 +25,7 @@ export default class Header extends Component {
   };
 
   render() {
+    const { open } = this.state;
     return (
       <div>
         <AppBar position="static" color="default">
@@ -41,7 +42,7 @@ export default class Header extends Component {
           </Toolbar>
         </AppBar>
 
-        <Sidebar open={this.state.open} handleDrawerClose={this.handleDrawerClose} />
+        <Sidebar open={open} handleDrawerClose={this.handleDrawerClose} />
       </div>
     );
   }

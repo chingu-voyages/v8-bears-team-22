@@ -15,7 +15,9 @@ import { Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import CircularProgressBar from './CircularProgressBar';
 
-const Sidebar = ({ open, handleDrawerClose, name, progress }) => (
+const Sidebar = ({
+  open, handleDrawerClose, name, progress,
+}) => (
   <Drawer variant="persistent" anchor="left" open={open}>
     <div>
       <IconButton onClick={handleDrawerClose}>
@@ -63,10 +65,12 @@ Sidebar.defaultProps = {
   name: 'Sidebar',
   open: false,
   progress: 0,
-}
+};
 
 Sidebar.propTypes = {
-  open: PropTypes.bool.isRequired,
+  name: PropTypes.string,
+  progress: PropTypes.number,
+  open: PropTypes.bool,
   handleDrawerClose: PropTypes.func.isRequired,
 };
 

@@ -20,7 +20,7 @@ export default class Header extends Component {
 
   render() {
     const { handleDrawerOpen } = this.props;
-    
+
     return (
       <div>
         <AppBar position="static" color="default">

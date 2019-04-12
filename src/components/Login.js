@@ -35,12 +35,12 @@ export default class Login extends Component {
   onLoginClick = () => {
     const { email, password } = this.state;
     const { logInFunction } = this.props;
-    
+
     const payload = {
       email,
       password,
     };
-    
+
     AccountService.login(payload)
       .then((response) => {
         if (!response.result.validEmail) {
@@ -86,7 +86,7 @@ export default class Login extends Component {
     const {
       open, isLoggedIn, invalidEmail, invalidPassword,
     } = this.state;
-    
+
     return (
       <div className="login">
         <div> valid email/password : test@email.com/password</div>

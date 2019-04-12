@@ -5,6 +5,7 @@ import gql from 'graphql-tag';
 import './App.css';
 import 'typeface-roboto';
 import { CssBaseline } from '@material-ui/core';
+import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import AccountScreen from './components/AccountScreen';
 import { Header, Entry, Secondary } from './containers';
@@ -213,7 +214,7 @@ const styles = {
 };
 
 App.propTypes = {
-  classes: PropTypes.object.isRequired,
-  client: PropTypes.object.isRequired,
+  client: PropTypes.shape().isRequired,
 };
+
 export default withStyles(styles)(App);

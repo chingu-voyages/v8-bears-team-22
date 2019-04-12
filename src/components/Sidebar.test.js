@@ -14,7 +14,7 @@ describe('<Sidebar /> component', () => {
     const wrapper = mount(
       <ApolloProvider client={client}>
         <Router>
-          <Sidebar open={true}/>
+          <Sidebar open={true} handleDrawerClose={() => {}} />
         </Router>
       </ApolloProvider>);
     expect(wrapper.exists('h4')).toBe(true);

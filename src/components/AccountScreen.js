@@ -2,15 +2,19 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import {
-  Button, Dialog, DialogActions, DialogContent, DialogContentText, Paper, TextField,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  Paper,
+  TextField,
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CachedIcon from '@material-ui/icons/Cached';
 import './AccountScreen.css';
 
-
 const PASSWORD = 'password'; // hardcoded password for testing the form
-
 
 const styles = {
   button: {
@@ -31,16 +35,21 @@ class AccountScreen extends Component {
   }
 
   get isPasswordMatch() {
-    return PASSWORD === this.state.oldPassword;
+    const { oldPassword } = this.state;
+    return PASSWORD === oldPassword;
   }
 
   get dialogMessage() {
     const { dialogMessage } = this.state;
-    // const { newPassword, oldPassword } = this.state;
+    // const {
+    //   newPassword, oldPassword, name, email,
+    // } = this.state;
     // if (newPassword.length > 0) {
-    //   return oldPassword.length > 0 && this.isPasswordMatch ? 'Password updated successfully!' : "Old password doesn't match!";
+    //   return oldPassword.length > 0 && this.isPasswordMatch
+    //     ? 'Password updated successfully!'
+    //     : "Old password doesn't match!";
     // }
-    // return `Updated successfully! Name: ${this.state.name}. Email: ${this.state.email}`;
+    // return `Updated successfully! Name: ${name}. Email: ${email}`;
     return dialogMessage;
   }
 
@@ -81,6 +90,9 @@ class AccountScreen extends Component {
       email, name, newPassword, open,
     } = this.state;
     const { classes } = this.props;
+    const {
+      open, name, email, oldPassword, newPassword,
+    } = this.state;
 
     return (
       <div className="account">
@@ -103,10 +115,7 @@ class AccountScreen extends Component {
         </Dialog>
         <h2 className="account-form-label">Update Personal Information</h2>
         <Paper className="account-paper">
-          <form
-            className="account-form"
-            onSubmit={this.submitForm}
-          >
+          <form className="account-form" onSubmit={this.submitForm}>
             <TextField
               id="standard-name"
               label="Name"
@@ -131,7 +140,7 @@ class AccountScreen extends Component {
               label="Old password"
               className="text-field"
               type="password"
-              value={this.state.oldPassword}
+              value={oldPassword}
               onChange={this.handleChange('oldPassword')}
               margin="normal"
             /> */}
@@ -144,11 +153,7 @@ class AccountScreen extends Component {
               onChange={this.handleChange('newPassword')}
               margin="normal"
             />
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-            >
+            <Button type="submit" variant="contained" color="primary">
               Update
             </Button>
           </form>
@@ -183,7 +188,7 @@ class AccountScreen extends Component {
 }
 
 AccountScreen.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.shape().isRequired,
   name: PropTypes.string,
   email: PropTypes.string,
   updateDetailsFunction: PropTypes.func.isRequired,
@@ -195,6 +200,5 @@ AccountScreen.defaultProps = {
   name: 'John Doe',
   email: 'johndoe@gmail.com',
 };
-
 
 export default withStyles(styles)(AccountScreen);

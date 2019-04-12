@@ -5,13 +5,11 @@ import gql from 'graphql-tag';
 import './App.css';
 import 'typeface-roboto';
 import { CssBaseline } from '@material-ui/core';
-import * as PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import AccountScreen from './components/AccountScreen';
 import { Header, Entry, Secondary } from './containers';
 import Login from './components/Login';
 import history from './history';
-
 
 class App extends Component {
   constructor(props) {
@@ -39,7 +37,7 @@ class App extends Component {
           this.setState({ connected: true });
         }
       })
-      .catch(err => (err));
+      .catch(err => console.log(err)); // eslint-disable-line no-console
   }
 
   logInFunction = (email, name, progress) => {
@@ -218,5 +216,4 @@ App.propTypes = {
   classes: PropTypes.object.isRequired,
   client: PropTypes.object.isRequired,
 };
-
 export default withStyles(styles)(App);

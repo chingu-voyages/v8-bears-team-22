@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import mongod from './mongodb';
 import expressApp from './expressApp';
 

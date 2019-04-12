@@ -35,12 +35,12 @@ export default class Login extends Component {
   onLoginClick = () => {
     const { email, password } = this.state;
     const { logInFunction } = this.props;
-
+    
     const payload = {
       email,
       password,
     };
-
+    
     AccountService.login(payload)
       .then((response) => {
         if (!response.result.validEmail) {
@@ -86,6 +86,7 @@ export default class Login extends Component {
     const {
       open, isLoggedIn, invalidEmail, invalidPassword,
     } = this.state;
+    
     return (
       <div className="login">
         <div> valid email/password : test@email.com/password</div>
@@ -104,27 +105,14 @@ export default class Login extends Component {
               </DialogContentText>
             </DialogContent>
           </Dialog>
-          <form
-            onSubmit={this.onFormSubmit}
-            className="login-form"
-          >
+          <form onSubmit={this.onFormSubmit} className="login-form">
             <FormControl fullWidth>
               <InputLabel>Email</InputLabel>
-              <Input
-                id="email"
-                name="email"
-                type="email"
-                onChange={this.onInputChange}
-              />
+              <Input id="email" name="email" type="email" onChange={this.onInputChange} />
             </FormControl>
             <FormControl fullWidth>
               <InputLabel>Password</InputLabel>
-              <Input
-                id="password"
-                name="password"
-                type="password"
-                onChange={this.onInputChange}
-              />
+              <Input id="password" name="password" type="password" onChange={this.onInputChange} />
             </FormControl>
             <Button
               type="submit"
@@ -133,7 +121,7 @@ export default class Login extends Component {
               onClick={this.onLoginClick}
               color="primary"
             >
-Login
+              Login
             </Button>
           </form>
         </Paper>

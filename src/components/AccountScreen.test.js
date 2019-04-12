@@ -1,6 +1,7 @@
 import React from 'react';
-import AccountScreen from "./AccountScreen";
-import {shallow} from 'enzyme';
+import { shallow } from 'enzyme';
+import AccountScreen from './AccountScreen';
+
 
 describe('<AccountScreen /> component', () => {
   it('renders component structure', () => {

@@ -1,6 +1,7 @@
 import React from 'react';
-import CircularProgressBar from "./CircularProgressBar";
-import {shallow} from 'enzyme';
+import { shallow } from 'enzyme';
+import CircularProgressBar from './CircularProgressBar';
+
 
 describe('<CircularProgressBar /> component', () => {
   it('renders svg element', () => {

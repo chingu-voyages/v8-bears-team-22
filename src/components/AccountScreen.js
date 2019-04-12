@@ -90,9 +90,6 @@ class AccountScreen extends Component {
       email, name, newPassword, open,
     } = this.state;
     const { classes } = this.props;
-    const {
-      open, name, email, oldPassword, newPassword,
-    } = this.state;
 
     return (
       <div className="account">

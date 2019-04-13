@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
   Button, FormControl, Input, InputLabel, Paper,
 } from '@material-ui/core';
@@ -15,6 +16,8 @@ export default class Login extends Component {
       email: '',
       password: '',
       isLoggedIn: false,
+      invalidEmail: false,
+      invalidPassword: false,
       open: false,
     };
   }
@@ -31,14 +34,43 @@ export default class Login extends Component {
 
   onLoginClick = () => {
     const { email, password } = this.state;
+    const { logInFunction } = this.props;
+
     const payload = {
       email,
       password,
     };
 
-    AccountService.login(payload).then((response) => {
-      this.setState({ isLoggedIn: response.result, open: true });
-    });
+    AccountService.login(payload)
+      .then((response) => {
+        if (!response.result.validEmail) {
+          this.setState({
+            invalidEmail: true,
+            invalidPassword: false,
+            isLoggedIn: false,
+            open: true,
+          });
+        } else if (!response.result.validPassword) {
+          this.setState({
+            invalidEmail: false,
+            invalidPassword: true,
+            isLoggedIn: false,
+            open: true,
+          });
+        } else {
+          logInFunction(
+            response.result.email,
+            response.result.name,
+            response.result.progress,
+          );
+          this.setState({
+            invalidEmail: false,
+            invalidPassword: false,
+            isLoggedIn: true,
+            open: true,
+          });
+        }
+      });
   };
 
   handleClose = () => {
@@ -51,7 +83,10 @@ export default class Login extends Component {
   }
 
   render() {
-    const { open, isLoggedIn } = this.state;
+    const {
+      open, isLoggedIn, invalidEmail, invalidPassword,
+    } = this.state;
+
     return (
       <div className="login">
         <div> valid email/password : test@email.com/password</div>
@@ -64,9 +99,9 @@ export default class Login extends Component {
           >
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-                Login
-                {' '}
-                {isLoggedIn ? 'Successful' : 'Unsuccessful'}
+                {isLoggedIn ? 'Login Successful' : ''}
+                {invalidEmail ? 'Invalid Email' : ''}
+                {invalidPassword ? 'Incorrect Password' : ''}
               </DialogContentText>
             </DialogContent>
           </Dialog>
@@ -94,3 +129,7 @@ export default class Login extends Component {
     );
   }
 }
+
+Login.propTypes = {
+  logInFunction: PropTypes.func.isRequired,
+};

@@ -19,6 +19,7 @@
     "express": "^4.16.4",
     "graphql": "^14.1.1",
     "graphql-tag": "latest",
+    "history": "^4.9.0",
     "mongodb": "^3.2.2",
     "prop-types": "latest",
     "react": "^16.8.4",

@@ -11,6 +11,7 @@ import AccountScreen from './components/AccountScreen';
 import { Header, Entry, Secondary } from './containers';
 import Login from './components/Login';
 import history from './history';
+import CurriculumScreen from './components/curriculumComponents/CurriculumScreen';
 
 class App extends Component {
   constructor(props) {
@@ -198,6 +199,12 @@ class App extends Component {
                 resetProgressFunction={this.resetProgressFunction}
                 updateDetailsFunction={this.updateDetailsFunction}
               />
+            )}
+          />
+          <Route 
+            path="/curriculum/"
+            render={() => (
+              <CurriculumScreen />
             )}
           />
         </div>

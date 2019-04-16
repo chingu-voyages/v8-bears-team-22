@@ -42,7 +42,7 @@ const Sidebar = ({
         <ListItemText primary="Overview" />
       </ListItem>
       <Divider />
-      <ListItem button key="Curriculum">
+      <ListItem button key="Curriculum" component={Link} to="/curriculum">
         <ListItemIcon>
           <SchoolIcon />
         </ListItemIcon>

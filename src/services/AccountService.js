@@ -18,6 +18,19 @@ class AccountService {
         console.log(err); // eslint-disable-line no-console
       });
   }
+
+  static isLoggedIn() {
+    const token = localStorage.getItem('authToken');
+    return !!token;
+  }
+
+  static logout() {
+    localStorage.removeItem('authToken');
+  }
+
+  static setAuthToken(token) {
+    localStorage.setItem('authToken', token);
+  }
 }
 
 export default AccountService;

@@ -68,6 +68,8 @@ export default class Login extends Component {
             invalidPassword: false,
             isLoggedIn: true,
             open: true,
+          }, () => {
+            AccountService.setAuthToken(response.result.token);
           });
         }
       });

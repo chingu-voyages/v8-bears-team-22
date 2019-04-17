@@ -29,17 +29,7 @@ const expressApp = (db) => {
 
   app.use(passDB);
   app.use('/auth', passDB, authRouter);
-  app.use('/api', (req, res, next) => {
-    let token = req.headers['x-access-token'] || req.headers['authorization'];
-    if (!AuthService.validateToken(token)) {
-      return res.json({
-        success: false,
-        message: 'Token is not valid'
-      });
-    } else {
-      next();
-    }
-  }, apiRoute);
+  app.use('/api', AuthService.checkToken, apiRoute);
 
   return app;
 };

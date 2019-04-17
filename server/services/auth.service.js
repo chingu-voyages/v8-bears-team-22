@@ -42,7 +42,6 @@ class AuthService {
   }
 
   static validateToken(tokenParam) {
-    console.log(tokenParam);
     let token = tokenParam;
     if (token && token.startsWith('Bearer ')) {
       // Remove Bearer from string
@@ -59,6 +58,18 @@ class AuthService {
       }
     }
     return false;
+  }
+
+  // eslint-disable-next-line consistent-return
+  static checkToken(req, res, next) {
+    const token = req.headers['x-access-token'] || req.headers.authorization;
+    if (!AuthService.validateToken(token)) {
+      return res.json({
+        success: false,
+        message: 'Token is not valid',
+      });
+    }
+    next();
   }
 }
 

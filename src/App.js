@@ -11,13 +11,14 @@ import AccountScreen from './components/AccountScreen';
 import { Header, Entry, Secondary } from './containers';
 import Login from './components/Login';
 import history from './history';
+import AccountService from './services/AccountService';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       connected: false,
-      signedIn: false,
+      signedIn: AccountService.isLoggedIn(),
       email: 'placeholder@appConstructor.com',
       name: 'Not John Doe',
       progress: 26,
@@ -25,20 +26,9 @@ class App extends Component {
     };
   }
 
+
   componentDidMount() {
-    fetch('/api')
-      .then((res) => {
-        if (res.status === 200) {
-          return res.json();
-        }
-        throw new Error('Connection Error');
-      })
-      .then((json) => {
-        if (json) {
-          this.setState({ connected: true });
-        }
-      })
-      .catch(err => console.log(err)); // eslint-disable-line no-console
+    this.checkConnection();
   }
 
   logInFunction = (email, name, progress) => {
@@ -47,10 +37,13 @@ class App extends Component {
       name,
       progress,
       signedIn: true,
+    }, () => {
+      this.checkConnection();
     });
-  }
+  };
 
   logOutFunction = () => {
+    AccountService.logout();
     this.setState({
       signedIn: false,
       email: 'placeholder@appLogOutFunction.com',
@@ -60,7 +53,7 @@ class App extends Component {
     }, () => {
       history.push('/');
     });
-  }
+  };
 
   deleteAccountFunction = (email) => {
     const { signedIn } = this.state;
@@ -83,7 +76,7 @@ class App extends Component {
       });
     }
     return 'Not Logged In';
-  }
+  };
 
   resetProgressFunction = (email) => {
     const { signedIn } = this.state;
@@ -106,7 +99,7 @@ class App extends Component {
       });
     }
     return 'Not Logged In';
-  }
+  };
 
   handleDrawerClose = () => {
     this.setState({ open: false });
@@ -139,11 +132,36 @@ class App extends Component {
       });
     }
     return 'Not Logged In';
+  };
+
+  checkConnection() {
+    const token = localStorage.getItem('authToken');
+    console.log(token);
+    fetch('/api', {
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: token ? `Bearer ${token}` : '',
+      },
+    })
+      .then((res) => {
+        console.log(JSON.stringify(res));
+        if (res.status === 200) {
+          return res.json();
+        }
+        throw new Error('Connection Error');
+      })
+      .then((json) => {
+        if (json.success) {
+          console.log(JSON.stringify(json));
+          this.setState({ connected: true });
+        }
+      })
+      .catch(err => console.log(err)); // eslint-disable-line no-console
   }
 
   render() {
     const {
-      connected, name, progress, email, open,
+      connected, name, progress, email, open, signedIn,
     } = this.state;
     return (
       <div className="App">
@@ -152,14 +170,15 @@ class App extends Component {
           name={name}
           progress={progress}
           open={open}
+          logOutFunction={this.logOutFunction}
           handleDrawerOpen={this.handleDrawerOpen}
           handleDrawerClose={this.handleDrawerClose}
+          isSignedIn={signedIn}
         />
         Express Server
         {' '}
         {connected ? 'Connected' : 'Not Connected'}
-        {' '}
--
+        {' '} -
         <Query
           query={gql`
             {

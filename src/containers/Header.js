@@ -15,10 +15,8 @@ export default class Header extends Component {
     this.state = {};
   }
 
-
   render() {
     const { handleDrawerOpen, logOutFunction, isSignedIn } = this.props;
-
     return (
       <div>
         <AppBar position="static" color="default">

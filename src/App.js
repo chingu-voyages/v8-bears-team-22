@@ -43,7 +43,6 @@ class App extends Component {
   };
 
   logOutFunction = () => {
-    AccountService.logout();
     this.setState({
       signedIn: false,
       email: 'placeholder@appLogOutFunction.com',
@@ -51,7 +50,9 @@ class App extends Component {
       progress: 0,
       open: false,
     }, () => {
+      AccountService.logout();
       history.push('/');
+      this.checkConnection();
     });
   };
 
@@ -149,9 +150,7 @@ class App extends Component {
         throw new Error('Connection Error');
       })
       .then((json) => {
-        if (json.success) {
-          this.setState({ connected: true });
-        }
+        this.setState({ connected: !!json.success });
       })
       .catch(err => console.log(err)); // eslint-disable-line no-console
   }

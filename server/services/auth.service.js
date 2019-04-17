@@ -1,7 +1,12 @@
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 
+// Created using: node -e "console.log(require('crypto').randomBytes(256).toString('base64'));"
+// Reference: https://github.com/dwyl/hapi-auth-jwt2/issues/48
+const secret = process.env.JWT_API_SECRET;
+
 class AuthService {
+
   static async isValidCredentials(db, payloadCreds) {
     const { email, password } = payloadCreds;
     const data = await db.users.findOne({ email });
@@ -36,7 +41,7 @@ class AuthService {
 
   static createToken(user) {
     return jwt.sign({ email: user.email, name: user.name },
-      'test', {
+      secret, {
         expiresIn: '24h',
       });
   }
@@ -44,13 +49,12 @@ class AuthService {
   static validateToken(tokenParam) {
     let token = tokenParam;
     if (token && token.startsWith('Bearer ')) {
-      // Remove Bearer from string
       token = token.slice(7, token.length);
     }
 
     if (token) {
       try {
-        const decoded = jwt.verify(token, 'test');
+        const decoded = jwt.verify(token, secret);
         console.log(decoded);
         return decoded;
       } catch (err) {

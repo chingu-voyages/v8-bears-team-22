@@ -6,14 +6,12 @@ import jwt from 'jsonwebtoken';
 const secret = process.env.JWT_API_SECRET;
 
 class AuthService {
-
   static async isValidCredentials(db, payloadCreds) {
     const { email, password } = payloadCreds;
     const data = await db.users.findOne({ email });
     if (data) {
       if (this.validatePassword(password, data.password, data.salt)) {
         const token = this.createToken(data);
-        console.log(token);
         return {
           validEmail: true,
           validPassword: true,
@@ -54,9 +52,7 @@ class AuthService {
 
     if (token) {
       try {
-        const decoded = jwt.verify(token, secret);
-        console.log(decoded);
-        return decoded;
+        return jwt.verify(token, secret);
       } catch (err) {
         return false;
       }

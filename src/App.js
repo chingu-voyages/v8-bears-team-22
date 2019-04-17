@@ -136,7 +136,6 @@ class App extends Component {
 
   checkConnection() {
     const token = localStorage.getItem('authToken');
-    console.log(token);
     fetch('/api', {
       headers: {
         'Content-Type': 'application/json',
@@ -144,7 +143,6 @@ class App extends Component {
       },
     })
       .then((res) => {
-        console.log(JSON.stringify(res));
         if (res.status === 200) {
           return res.json();
         }
@@ -152,7 +150,6 @@ class App extends Component {
       })
       .then((json) => {
         if (json.success) {
-          console.log(JSON.stringify(json));
           this.setState({ connected: true });
         }
       })
@@ -178,7 +175,8 @@ class App extends Component {
         Express Server
         {' '}
         {connected ? 'Connected' : 'Not Connected'}
-        {' '} -
+        {' '}
+        -
         <Query
           query={gql`
             {

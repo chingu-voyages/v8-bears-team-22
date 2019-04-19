@@ -34,7 +34,10 @@ class CurriculumChapter extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      expanded: false
+      expanded: false, 
+      title: "Chapter TITLE",
+      progress: "0",
+
     }
   }
 
@@ -45,10 +48,12 @@ class CurriculumChapter extends Component {
   }
 
   render() {
-    const {classes} = this.props;
-    const {title, progress, subChapters} = this.props.chapter;
+    const {classes, chapter} = this.props;
+    const {title, progress} = this.state;
+    Object.keys(chapter).map(item => console.log(item));
 
-    const subChapterComponents = subChapters.map(subChapter => <CurriculumSubChapter key={subChapter.id} subChapter={subChapter} />);
+    // const subChapterComponents = subChapters.map(subChapter => );
+    // <CurriculumSubChapter key={subChapter.id} subChapter={subChapter} />
 
     return (
       <Card className={classes.chapterCard}>
@@ -71,7 +76,7 @@ class CurriculumChapter extends Component {
         </CardActions>
         <Collapse in={this.state.expanded} unmountOnExit>
           <CardContent>
-            {subChapterComponents}
+            subChapterComponents
           </CardContent>
         </Collapse>
       </Card>

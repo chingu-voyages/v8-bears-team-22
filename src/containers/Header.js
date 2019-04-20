@@ -12,15 +12,11 @@ import Sidebar from '../components/Sidebar';
 export default class Header extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-    //   open: false,
-    };
+    this.state = {};
   }
 
-
   render() {
-    const { handleDrawerOpen } = this.props;
-
+    const { handleDrawerOpen, logOutFunction, isSignedIn } = this.props;
     return (
       <div>
         <AppBar position="static" color="default">
@@ -31,9 +27,8 @@ export default class Header extends Component {
             <Typography variant="h6" color="inherit">
               Interview Preppers
             </Typography>
-            <Button>
-              <Link to="/login">Login</Link>
-            </Button>
+            {isSignedIn ? <Button onClick={logOutFunction}>Logout</Button>
+              : <Button><Link to="/login">Login</Link></Button>}
           </Toolbar>
         </AppBar>
 
@@ -47,4 +42,6 @@ export default class Header extends Component {
 
 Header.propTypes = {
   handleDrawerOpen: PropTypes.func.isRequired,
+  logOutFunction: PropTypes.func.isRequired,
+  isSignedIn: PropTypes.bool.isRequired,
 };

@@ -58,17 +58,19 @@ export default class Login extends Component {
             open: true,
           });
         } else {
-          logInFunction(
-            response.result.email,
-            response.result.name,
-            response.result.progress,
-          );
           this.setState({
             invalidEmail: false,
             invalidPassword: false,
             isLoggedIn: true,
             open: true,
+          }, () => {
+            AccountService.setAuthToken(response.result.token);
           });
+          logInFunction(
+            response.result.email,
+            response.result.name,
+            response.result.progress,
+          );
         }
       });
   };

@@ -1,14 +1,18 @@
 import React, {Component} from 'react';
 // import PropTypes from 'prop-types';
-import Chapters from './dummyCurriculum.js';
-import ch1 from './chapters/ch1.json';
-import ch2 from './chapters/ch2.json';
-import ch3 from './chapters/ch3.json';
-import ch4 from './chapters/ch4.json';
-import ch5 from './chapters/ch5.json';
-import ch6 from './chapters/ch6.json';
-import ch7 from './chapters/ch7.json';
-import ch8 from './chapters/ch8.json';
+
+// import Chapters from './dummyCurriculum.js';
+// import ch1 from './chapters/ch1.json';
+// import ch2 from './chapters/ch2.json';
+// import ch3 from './chapters/ch3.json';
+// import ch4 from './chapters/ch4.json';
+// import ch5 from './chapters/ch5.json';
+// import ch6 from './chapters/ch6.json';
+// import ch7 from './chapters/ch7.json';
+// import ch8 from './chapters/ch8.json';
+
+import jsonCurriculum from './data/jsonParser';
+import fullCurriculum from './data/fullCurriculum.json'
 import CurriculumChapter from './CurriculumChapter';
 import {withStyles} from '@material-ui/core/styles';
 
@@ -28,9 +32,9 @@ class CurriculumScreen extends Component {
 
 
   get chapters() {
-    const chaptersList = [ch1, ch2, ch3, ch4, ch5, ch6, ch7, ch8]
-    return chaptersList.map(chapter => <CurriculumChapter chapter={chapter}/>);
-    // return 
+    console.log(jsonCurriculum);
+    const chaptersList = Object.entries(fullCurriculum).map(chapter => <CurriculumChapter key={chapter} chapter={chapter}/>);
+    return chaptersList;
   }
 
   render() {

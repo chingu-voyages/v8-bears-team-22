@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import propTypes from 'prop-types';
-import CurriculumSubChapter from './CurriculumSubChapter';
+import CurriculumItem from './CurriculumItem';
 import {withStyles} from '@material-ui/core/styles';
 import classnames from 'classnames';
 import Card from '@material-ui/core/Card';
@@ -35,8 +35,7 @@ class CurriculumChapter extends Component {
     super(props);
     this.state = {
       expanded: false, 
-      title: "Chapter TITLE",
-      progress: "0",
+      progress: "22",
 
     }
   }
@@ -47,23 +46,26 @@ class CurriculumChapter extends Component {
     }));
   }
 
+  renderItems = (itemsList) => {
+    // return itemsList.map(item => console.log(item));
+    return itemsList.map(item => <CurriculumItem key={item} item={item}/>);
+  }
+
   render() {
     const {classes, chapter} = this.props;
-    const {title, progress} = this.state;
-    Object.keys(chapter).map(item => console.log(item));
-
-    // const subChapterComponents = subChapters.map(subChapter => );
-    // <CurriculumSubChapter key={subChapter.id} subChapter={subChapter} />
+    const {progress} = this.state;
+    const chapterTitle = chapter[0];
+    const chapterItems = chapter[1];
 
     return (
       <Card className={classes.chapterCard}>
         <CardHeader
           avatar={
-            <Avatar aria-label={title} className={classes.avatar}>
+            <Avatar aria-label="Progress" className={classes.avatar}>
               {progress}%
             </Avatar>
           }
-          title={title}
+          title={chapterTitle}
         />
         <CardActions className={classnames(classes.expandIcon, {[classes.expandIconOpen]: this.state.expanded})} disableActionSpacing>
           <IconButton
@@ -76,7 +78,7 @@ class CurriculumChapter extends Component {
         </CardActions>
         <Collapse in={this.state.expanded} unmountOnExit>
           <CardContent>
-            subChapterComponents
+            {this.renderItems(chapterItems)}
           </CardContent>
         </Collapse>
       </Card>

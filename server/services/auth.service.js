@@ -29,6 +29,29 @@ class AuthService {
     return { validEmail: false };
   }
 
+  static async registerUser(db, payloadCreds) {
+    const { email, name, password } = payloadCreds;
+    try {
+      const salt = crypto.randomBytes(16).toString('hex');
+      const hashedPassword = this.hashPassword(password, salt);
+      await db.users.insertOne({
+        email, name, password: hashedPassword, salt,
+      });
+      return {
+        message: 'User Succesfully Registered',
+      };
+    } catch (err) {
+      if (err.code === 11000) {
+        return {
+          error: 'Email already registered',
+        };
+      }
+      return {
+        error: 'Unspecified Error',
+      };
+    }
+  }
+
   static hashPassword(password, salt) {
     return crypto.pbkdf2Sync(password, salt.toString('hex'), 10000, 512, 'sha512').toString('hex');
   }

@@ -10,6 +10,7 @@ import { withStyles } from '@material-ui/core/styles';
 import AccountScreen from './components/AccountScreen';
 import { Header, Entry, Secondary } from './containers';
 import Login from './components/Login';
+import Register from './components/Register';
 import history from './history';
 import AccountService from './services/AccountService';
 
@@ -198,12 +199,22 @@ class App extends Component {
           <Route
             path="/login/"
             render={() => (
-              <Login logInFunction={this.logInFunction} />
+              <Login
+                logInFunction={this.logInFunction}
+                history={history}
+              />
+            )}
+          />
+          <Route
+            path="/register/"
+            render={() => (
+              <Register
+                history={history}
+              />
             )}
           />
           <Route
             path="/account/"
-            // component={AccountScreen} />
             render={() => (
               <AccountScreen
                 name={name}

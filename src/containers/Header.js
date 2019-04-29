@@ -17,6 +17,34 @@ export default class Header extends Component {
 
   render() {
     const { handleDrawerOpen, logOutFunction, isSignedIn } = this.props;
+    const notSignedInUser = (
+      <div>
+        <Button
+          variant="outlined"
+          color="primary"
+          style={{ marginLeft: 5, marginRight: 5 }}
+        >
+          <Link
+            to="/login"
+            style={{ textDecoration: 'none', color: 'inherit' }}
+          >
+            Login
+          </Link>
+        </Button>
+        <Button
+          variant="outlined"
+          color="secondary"
+          style={{ marginLeft: 5 }}
+        >
+          <Link
+            to="/register"
+            style={{ textDecoration: 'none', color: 'inherit' }}
+          >
+            Register
+          </Link>
+        </Button>
+      </div>
+    );
     return (
       <div>
         <AppBar position="static" color="default">
@@ -24,11 +52,11 @@ export default class Header extends Component {
             <IconButton color="default" aria-label="Menu" onClick={handleDrawerOpen}>
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" color="inherit">
+            <Typography style={{ flex: 1 }} variant="h6" color="inherit">
               Interview Preppers
             </Typography>
-            {isSignedIn ? <Button onClick={logOutFunction}>Logout</Button>
-              : <Button><Link to="/login">Login</Link></Button>}
+            {isSignedIn ? <Button variant="outlined" onClick={logOutFunction}>Logout</Button>
+              : notSignedInUser}
           </Toolbar>
         </AppBar>
 

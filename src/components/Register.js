@@ -7,18 +7,17 @@ import './Login.css';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import AccountService from '../services/AccountService';
 
-export default class Login extends Component {
+export default class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
       email: '',
+      name: '',
       password: '',
-      isLoggedIn: false,
-      invalidEmail: false,
-      invalidPassword: false,
+      passwordConfirmation: '',
       open: false,
+      modalMessage: '',
       redirect: false,
     };
   }
@@ -33,75 +32,72 @@ export default class Login extends Component {
     });
   };
 
-  onLoginClick = () => {
-    const { email, password } = this.state;
-    const { logInFunction } = this.props;
+  onRegisterClick = () => {
+    const { email, password, name } = this.state;
 
     const payload = {
       email,
+      name,
       password,
     };
 
-    AccountService.login(payload)
+    fetch('http://localhost:5000/auth/register', {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    }).then(res => res.json())
       .then((response) => {
-        if (!response.result.validEmail) {
+        if (response.result.error) {
           this.setState({
-            invalidEmail: true,
-            invalidPassword: false,
-            isLoggedIn: false,
             open: true,
+            modalMessage: response.result.error,
           });
-        } else if (!response.result.validPassword) {
+        } else if (response.result.message) {
           this.setState({
-            invalidEmail: false,
-            invalidPassword: true,
-            isLoggedIn: false,
             open: true,
+            modalMessage: response.result.message,
+            redirect: true,
           });
         } else {
           this.setState({
-            invalidEmail: false,
-            invalidPassword: false,
-            isLoggedIn: true,
             open: true,
-            redirect: true,
-          }, () => {
-            AccountService.setAuthToken(response.result.token);
+            modalMessage: 'Unknown Error',
           });
-          logInFunction(
-            response.result.email,
-            response.result.name,
-            response.result.progress,
-          );
         }
-      });
+      })
+      // eslint-disable-next-line no-console
+      .catch(err => console.log(err));
   };
 
   handleClose = () => {
     const { redirect } = this.state;
     const { history } = this.props;
+
     if (redirect) {
       this.setState({
         open: false,
+        modalMessage: '',
         redirect: false,
-      }, () => history.push('/'));
+      }, () => history.push('/login'));
     }
-    this.setState({ open: false });
+    this.setState({ open: false, modalMessage: '' });
   };
 
   validateForm() {
-    const { email, password } = this.state;
-    return email.length > 0 && password.length > 0;
+    const { email, password, passwordConfirmation } = this.state;
+    return email.length > 0 && password.length > 0 && password === passwordConfirmation;
   }
 
   render() {
     const {
-      open, isLoggedIn, invalidEmail, invalidPassword,
+      open, modalMessage,
     } = this.state;
 
     return (
       <div className="login">
-        <div> valid email/password : test@email.com/password</div>
         <Paper className="paper">
           <Dialog
             open={open}
@@ -111,26 +107,32 @@ export default class Login extends Component {
           >
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-                {isLoggedIn ? 'Login Successful' : ''}
-                {invalidEmail ? 'Invalid Email' : ''}
-                {invalidPassword ? 'Incorrect Password' : ''}
+                {modalMessage}
               </DialogContentText>
             </DialogContent>
           </Dialog>
           <form onSubmit={this.onFormSubmit} className="login-form">
             <FormControl fullWidth>
-              <InputLabel>Email</InputLabel>
-              <Input id="email" name="email" type="email" onChange={this.onInputChange} />
+              <InputLabel>Email*</InputLabel>
+              <Input autoFocus required id="email" name="email" type="email" onChange={this.onInputChange} />
             </FormControl>
             <FormControl fullWidth>
-              <InputLabel>Password</InputLabel>
-              <Input id="password" name="password" type="password" onChange={this.onInputChange} />
+              <InputLabel>Name</InputLabel>
+              <Input id="name" name="name" type="text" onChange={this.onInputChange} />
+            </FormControl>
+            <FormControl fullWidth>
+              <InputLabel>Password*</InputLabel>
+              <Input required id="password" name="password" type="password" onChange={this.onInputChange} />
+            </FormControl>
+            <FormControl fullWidth>
+              <InputLabel>Password Confirmation*</InputLabel>
+              <Input required id="passwordConfirmation" name="passwordConfirmation" type="password" onChange={this.onInputChange} />
             </FormControl>
             <Button
               type="submit"
               fullWidth
               disabled={!this.validateForm()}
-              onClick={this.onLoginClick}
+              onClick={this.onRegisterClick}
               color="primary"
             >
               Login
@@ -142,7 +144,6 @@ export default class Login extends Component {
   }
 }
 
-Login.propTypes = {
-  logInFunction: PropTypes.func.isRequired,
+Register.propTypes = {
   history: PropTypes.instanceOf(Object).isRequired,
 };

@@ -52,27 +52,19 @@ export default class Register extends Component {
       .then((response) => {
         if (response.result.error) {
           this.setState({
+            open: true,
             modalMessage: response.result.error,
           });
-        }
-        if (response.result.message) {
+        } else if (response.result.message) {
           this.setState({
             open: true,
             modalMessage: response.result.message,
             redirect: true,
           });
-        } else if (!response.result.validPassword) {
-          this.setState({
-            open: true,
-          });
         } else {
-        //   logInFunction(
-        //     response.result.email,
-        //     response.result.name,
-        //     response.result.progress,
-        //   );
           this.setState({
             open: true,
+            modalMessage: 'Unknown Error',
           });
         }
       })
